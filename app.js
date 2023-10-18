@@ -1,6 +1,7 @@
 let firstNumber = 0;
 let answer = 0;
 let operator = "";
+const calculator = document.querySelector(".container");
 let add = (firstNumber, secondNumber) => {
   let answer = firstNumber + secondNumber;
   return answer;
@@ -18,7 +19,7 @@ let divide = (firstNumber, secondNumber) => {
   return answer;
 };
 
-let operate = (firstNumber, operator, secondNumber) => {
+let operate = (firstNumber, operator, secondNumber, e) => {
   switch (operator) {
     case "+":
       add(firstNumber, secondNumber);
@@ -34,3 +35,13 @@ let operate = (firstNumber, operator, secondNumber) => {
       break;
   }
 };
+
+let numberButtons = document.querySelectorAll(".input");
+numberButtons.forEach((number) => {
+  let display = document.getElementsByClassName("display");
+  number.addEventListener("click", (e) => {
+    display[0].innerHTML = e.target.textContent;
+    console.log(display);
+  });
+});
+console.log(numberButtons);
