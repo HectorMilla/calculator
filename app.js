@@ -1,8 +1,17 @@
 const calculator = document.querySelector(".container");
-const numberButtons = document.querySelectorAll(".input");
+const numberButtons = document.querySelectorAll(".number"); // changed from input to number rember
 const display = document.querySelector(".display");
 const equalsButton = document.querySelector(".equals");
-const clear = document.querySelector('.clear')
+const clear = document.querySelector(".clear");
+const container = document.querySelector(".container");
+let firstNumber = "";
+let operator = "";
+let secondNumber = "";
+//number that will appear on display
+let displaynumber = "";
+//counter to see if it is first operation or not (ANS function in reg calculator)
+let counter = 0;
+//Math Functions
 let add = (firstNumber, secondNumber) => {
   let answer = firstNumber + secondNumber;
   return answer;
@@ -19,9 +28,10 @@ let divide = (firstNumber, secondNumber) => {
   let answer = firstNumber / secondNumber;
   return answer;
 };
-
+// Will run one of the math functions based on operator
 let operate = (firstNumber, operator, secondNumber) => {
-  let answer ;
+  let answer;
+  console.log("test | " + firstNumber, operator, secondNumber);
   switch (operator) {
     case "+":
       answer = add(parseInt(firstNumber), parseInt(secondNumber));
@@ -36,41 +46,30 @@ let operate = (firstNumber, operator, secondNumber) => {
       answer = divide(parseInt(firstNumber), parseInt(secondNumber));
       break;
   }
- display.innerHTML = answer
+  return answer;
 };
-let inputArr = [];
-
-numberButtons.forEach((number, index) => {
-  number.addEventListener("click", (e) => {
-    inputArr.push(e.target.textContent);
-    display.innerHTML = e.target.textContent;
-  });
-});
-
-//takes string of first and 2nd numbers and turns them into a real number
-let findOperator = () => {
-  let operatorList = ["+", "-", "*", "/"];
-  let firstNumber = "";
-  let operator = "";
-  let secondNumber = "";
-  let operatorIndex;
-  for (let i = 0; i < inputArr.length; i++) {
-    if (operatorList.includes(inputArr[i])) {
-      operatorIndex = i;
-      operator = inputArr[i];
+//event listener on calculator
+container.addEventListener("click", (e) => {
+  const eventClassName = e.target.className;
+  if (eventClassName == "number") {
+    displaynumber += e.target.textContent;
+  } else {
+    // added a space next to operator to make it easier to split later on
+    displaynumber += ` ${e.target.textContent} `;
+    counter++;
+    if (counter == 2) {
+      //taking string from $DisplayNumber and splitting it so i can get individual values
+      let inputArr = displaynumber.split(" ");
+      firstNumber = inputArr[0];
+      secondNumber = inputArr[2];
+      operator = inputArr[1];
+      // Dont want = sign to appear on display
+      e.target.className != "equals"
+        ? (displaynumber =
+            operate(firstNumber, operator, secondNumber) + e.target.textContent)
+        : (displaynumber = operate(firstNumber, operator, secondNumber));
+      counter = 0;
     }
   }
-  for (let i = 0; i < operatorIndex; i++) {
-    firstNumber += inputArr[i];
-  }
-  for (let i = operatorIndex + 1; i < inputArr.length; i++) {
-    secondNumber += inputArr[i];
-  }
-  operate(firstNumber, operator, secondNumber);
-};
-
-
-equalsButton.addEventListener("click", findOperator);
-clear.addEventListener('click', () => {
-  display.innerHTML = 0
-})
+  display.innerHTML = displaynumber;
+});

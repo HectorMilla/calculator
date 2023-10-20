@@ -1,0 +1,31 @@
+body {
+  background-color: darkgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  display: flex;
+
+  width: 80%;
+}
+.display {
+  background-color: aliceblue;
+  height: 20%;
+  text-align: end;
+  width: 80%;
+}
+.operators {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.number {
+  flex-basis: 33%;
+}
