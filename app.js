@@ -2,6 +2,7 @@ const calculator = document.querySelector(".container");
 const numberButtons = document.querySelectorAll(".input");
 const display = document.querySelector(".display");
 const equalsButton = document.querySelector(".equals");
+const clear = document.querySelector('.clear')
 let add = (firstNumber, secondNumber) => {
   let answer = firstNumber + secondNumber;
   return answer;
@@ -20,22 +21,22 @@ let divide = (firstNumber, secondNumber) => {
 };
 
 let operate = (firstNumber, operator, secondNumber) => {
-  let poo = "";
+  let answer ;
   switch (operator) {
     case "+":
-      poo = add(parseInt(firstNumber), parseInt(secondNumber));
+      answer = add(parseInt(firstNumber), parseInt(secondNumber));
       break;
     case "-":
-      poo = subtract(parseInt(firstNumber), parseInt(secondNumber));
+      answer = subtract(parseInt(firstNumber), parseInt(secondNumber));
       break;
     case "*":
-      poo = multiply(parseInt(firstNumber), parseInt(secondNumber));
+      answer = multiply(parseInt(firstNumber), parseInt(secondNumber));
       break;
     case "/":
-      poo = divide(parseInt(firstNumber), parseInt(secondNumber));
+      answer = divide(parseInt(firstNumber), parseInt(secondNumber));
       break;
   }
-  return poo;
+ display.innerHTML = answer
 };
 let inputArr = [];
 
@@ -65,11 +66,11 @@ let findOperator = () => {
   for (let i = operatorIndex + 1; i < inputArr.length; i++) {
     secondNumber += inputArr[i];
   }
-  console.log(inputArr);
-  //operate(firstNumber, operator, secondNumber);
+  operate(firstNumber, operator, secondNumber);
 };
 
-// take numbers that were clicked on and separate them into first number operator and 2nd
+
 equalsButton.addEventListener("click", findOperator);
-// let x = operate(1, "+", 2);
-// console.log(x);
+clear.addEventListener('click', () => {
+  display.innerHTML = 0
+})
